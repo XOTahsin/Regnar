@@ -85,7 +85,7 @@ using (bucket_id = 'regnar-products' and exists (select 1 from public.admin_user
 with check (bucket_id = 'regnar-products' and exists (select 1 from public.admin_users au where au.user_id = (select auth.uid())));
 create policy "REGNAR admins can delete product images"
 on storage.objects for delete to authenticated
-using (bucket_id = 'regnar-products');
+using (bucket_id = 'regnar-products' and exists (select 1 from public.admin_users au where au.user_id = (select auth.uid())));
 insert into public.categories(name_en, name_ar, slug, sort_order) values
  ('Abstract Art','فن تجريدي','abstract-art',1),
  ('Modern Art','فن حديث','modern-art',2),
