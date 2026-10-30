@@ -4,10 +4,11 @@ Responsive bilingual (English / Arabic) product catalogue for REGNAR. The first 
 
 ## Included
 - `index.html` — customer storefront with text-led animated hero/categories, a Latest Arrivals section and full product catalogue
-- `admin.html` — private product, category and homepage content manager
+- `admin.html` — private product, multi-image gallery, category photography, promotions, manual sales display and homepage content manager
 - `config.js` — browser-safe Supabase project URL/publishable key and initial contact defaults
 - `supabase/migrations/202610300001_regnar_store.sql` — initial database schema and row-level security
 - `supabase/migrations/202610310001_storefront_controls.sql` — category homepage visibility and bilingual storefront settings
+- `supabase/migrations/202610310002_product_gallery_promotions.sql` — optional category images, Top Rated flag and manual sales-count fields
 - `assets/regnar-logo.png` — transparent original REGNAR wordmark
 - `privacy.html`, `shipping.html` — bilingual customer information pages
 
@@ -18,7 +19,7 @@ Responsive bilingual (English / Arabic) product catalogue for REGNAR. The first 
 - Instagram: REGNAR profile
 - Facebook: REGNAR page
 
-The initial database migration and the storefront-controls schema have already been applied to the dedicated REGNAR Supabase project. The storefront-controls SQL was executed against the live project and the migration file is committed for version control; do not re-run it against the already migrated project.
+The initial database migration and the storefront-controls and product-promotion schemas have been applied to the dedicated REGNAR Supabase project. The storefront-controls SQL was executed against the live project and the migration file is committed for version control; do not re-run it against the already migrated project.
 
 ## First admin account setup
 1. In Supabase Dashboard → Authentication → Users, create an administrator user.
@@ -33,7 +34,7 @@ The initial database migration and the storefront-controls schema have already b
 4. Open `/admin` and sign in. Only users in `public.admin_users` can manage products, categories, images and storefront settings.
 
 ## Category management
-Open Admin → Categories. Add a category with English and optional Arabic names, set its slug and display order, and choose whether it is active in shop filters and visible on the homepage. Existing categories can be edited and reordered. Deleting a category does not delete its products: PostgreSQL sets the affected products' `category_id` to NULL so they remain in the catalogue as uncategorised items.
+Open Admin → Categories. Add a category with English and optional Arabic names, set its slug and display order, and choose whether it is active in shop filters and visible on the homepage. Optionally upload a JPG, PNG or WEBP category photograph; without one the storefront keeps the text-led category card. Existing categories can be edited and reordered. Deleting a category does not delete its products: PostgreSQL sets the affected products' `category_id` to NULL so they remain in the catalogue as uncategorised items.
 
 ## Storefront controls
 Open Admin → Storefront to edit English and Arabic versions of the announcement, hero headline and description, animated ticker statements, categories section, collection section, brand story, custom-frame section and contact section. The same panel controls the WhatsApp number, Instagram/Facebook links, visibility of Latest Arrivals and how many new designs are shown.
@@ -44,8 +45,8 @@ The hero is text-only by default. An optional brand photo can be uploaded from A
 1. Open `/admin` and sign in.
 2. Choose **Add design**. Enter the English name, optional Arabic name, description, category and base price in AED.
 3. Add any number of size rows, each with an optional Arabic label and its own AED price. Customers can also request a custom dimension.
-4. Add available frame finishes, upload a main image and optional gallery images.
-5. Save as Draft or Published. Only non-draft products appear publicly. New products are ordered by `created_at`, newest first, and appear in Latest Arrivals while that section is enabled.
+4. Add available frame finishes, upload a main image and multiple gallery images. Remove unwanted gallery images in the editor before saving. Customers can switch between all uploaded angles in the product detail view, and gallery thumbnails are revealed on hover over product cards on desktop.
+5. Set an optional original price above the current price to show an automatic discount amount, mark a design as Top Rated, and enter a manually maintained sales count. Save as Draft or Published. Only non-draft products appear publicly. New products are ordered by `created_at`, newest first, and appear in Latest Arrivals while that section is enabled.
 
 Images are stored in the public `regnar-products` bucket so customers can see product photography. Upload, update and delete access is restricted to authorised admins. Allowed formats: JPG, PNG and WEBP, maximum 12 MB per image. Original uploaded files are not cropped or overwritten by the website.
 
