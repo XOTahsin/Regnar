@@ -76,7 +76,11 @@ values (
   'facebook_url','https://www.facebook.com/share/1JMjC66xXH/',
   'hero_image_path','',
   'show_latest',true,
-  'latest_count',4
+  'latest_count',4,
+  'latest_title_en','Latest arrivals.',
+  'latest_title_ar','أحدث الإضافات.',
+  'latest_subtitle_en','The newest additions to the REGNAR collection.',
+  'latest_subtitle_ar','أحدث الأعمال التي انضمت إلى مجموعة ريجنار.'
  )
 )
 on conflict (id) do nothing;
