@@ -37,6 +37,7 @@ with check (id = 'global' and exists (
 
 grant select on public.store_settings to anon, authenticated;
 grant insert, update on public.store_settings to authenticated;
+create index if not exists store_settings_updated_by_idx on public.store_settings (updated_by);
 
 insert into public.store_settings (id, content)
 values (
