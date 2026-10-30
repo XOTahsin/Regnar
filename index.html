@@ -83,7 +83,7 @@ Object.assign(tr.ar,{latestEyebrow:'وصل حديثاً',latestTitle:'أحدث �
 
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function t(k){return tr[lang][k]||tr.en[k]||k}
-function wa(msg){const n=String(cfg.whatsappNumber||'').replace(/\D/g,'');if(!n){toast(t('whatsappMissing'));return}window.open('https://wa.me/'+n+'?text='+encodeURIComponent(msg),'_blank','noopener')}
+function wa(msg){const n=String(storeContent?.whatsapp_number||cfg.whatsappNumber||'').replace(/\D/g,'');if(!n){toast(t('whatsappMissing'));return}window.open('https://wa.me/'+n+'?text='+encodeURIComponent(msg),'_blank','noopener')}
 function toast(m){const e=$('#toast');e.textContent=m;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),2600)}
 function img(path){if(/^https?:/i.test(path||''))return path;return db.storage.from('regnar-products').getPublicUrl(path||'').data.publicUrl}
 function title(p){return lang==='ar'&&p.title_ar?p.title_ar:p.title_en}
