@@ -1,0 +1,9 @@
+{
+  "name": "REGNAR Frame Art",
+  "short_name": "REGNAR",
+  "description": "Premium framed artwork for considered spaces.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f6f3ed",
+  "theme_color": "#17191b"
+}
