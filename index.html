@@ -72,7 +72,7 @@ Object.assign(tr.ar,{
 
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function t(k){return tr[lang][k]||tr.en[k]||k}
-function wa(msg){const n=String(cfg.whatsappNumber||'').replace(/\D/g,'');if(!n){toast('WhatsApp number not configured');return}window.open('https://wa.me/'+n+'?text='+encodeURIComponent(msg),'_blank','noopener')}
+function wa(msg){const n=String(cfg.whatsappNumber||'').replace(/\D/g,'');if(!n){toast(t('whatsappMissing'));return}window.open('https://wa.me/'+n+'?text='+encodeURIComponent(msg),'_blank','noopener')}
 function toast(m){const e=$('#toast');e.textContent=m;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),2600)}
 function img(path){if(/^https?:/i.test(path||''))return path;return db.storage.from('regnar-products').getPublicUrl(path||'').data.publicUrl}
 function title(p){return lang==='ar'&&p.title_ar?p.title_ar:p.title_en}
@@ -92,7 +92,7 @@ $('#close').addEventListener('click',()=>$('#modal').classList.remove('open'));$
 $('#detailEnquire').addEventListener('click',()=>{if(!active)return;const custom=$('#detailSize').value==='custom';const size=custom?($('#customDimensions').value||'Custom size'):(lang==='ar'&&activeSize.label_ar?activeSize.label_ar:activeSize.label_en);const price=custom?(lang==='ar'?'ابتداءً من ':'From ')+currency(active.price_aed):currency(activeSize.price_aed??active.price_aed);const msg=lang==='ar'?'مرحباً ريجنار، أنا مهتم بـ '+title(active)+'\\nالمقاس: '+size+'\\nاللون: '+$('#detailFinish').value+'\\nالسعر: '+price+'\\nيرجى مشاركة التوفر وتفاصيل التوصيل.':'Hello REGNAR, I am interested in '+title(active)+'.\\nSize: '+size+'\\nFrame finish: '+$('#detailFinish').value+'\\nPrice shown: '+price+'. Please share availability and delivery details.';wa(msg)});
 $('#customForm').addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.currentTarget),msg=lang==='ar'?'مرحباً ريجنار، أرغب في طلب إطار مخصص.\\nالاسم: '+f.get('name')+'\\nالمقاس: '+f.get('size')+'\\nالتفاصيل: '+(f.get('notes')||'لا توجد تفاصيل إضافية'):'Hello REGNAR, I would like to request a custom frame.\\nName: '+f.get('name')+'\\nPreferred size: '+f.get('size')+'\\nDetails: '+(f.get('notes')||'No additional details');wa(msg)});
 $('#contactWa').href='https://wa.me/'+String(cfg.whatsappNumber).replace(/\D/g,'')+'?text='+encodeURIComponent(lang==='ar'?'مرحباً ريجنار، أود معرفة المزيد عن مجموعة اللوحات المؤطرة.':'Hello REGNAR, I would like to know more about your framed art collection.');
-['contactIg','contactFb'].forEach((id)=>$('#'+id).addEventListener('click',e=>{e.preventDefault();wa('Hello REGNAR, I found you through '+(id==='contactIg'?'Instagram':'Facebook')+' and would like to know more about your framed art collection.')}));$('#contactIg').href='#';$('#contactFb').href='#';
+['contactIg','contactFb'].forEach((id)=>$('#'+id).addEventListener('click',e=>{e.preventDefault();wa(lang==='ar'?'مرحباً ريجنار، وجدتكم عبر '+(id==='contactIg'?'إنستغرام':'فيسبوك')+' وأود معرفة المزيد عن مجموعة اللوحات المؤطرة.':'Hello REGNAR, I found you through '+(id==='contactIg'?'Instagram':'Facebook')+' and would like to know more about your framed art collection.')}));$('#contactIg').href='#';$('#contactFb').href='#';
 $('#footIg').href=cfg.instagramUrl;$('#footFb').href=cfg.facebookUrl;$('#year').textContent=new Date().getFullYear();load();
 </script>
 </body></html>
