@@ -43,6 +43,69 @@
 .detail-signals{display:flex;gap:7px;flex-wrap:wrap;margin:0 0 12px}.detail-signals span{background:#e9e1d4;color:#6d593c;padding:5px 8px;font-size:8px;letter-spacing:.08em;text-transform:uppercase}
 .detail-price-row{display:flex;align-items:center;gap:10px;margin:6px 0 15px}#detailPrice{font-size:15px;color:#92784f}#detailComparePrice{font-size:11px;color:#888;text-decoration:line-through}
 @media(max-width:650px){.product-thumb-rail{opacity:1;transform:none;pointer-events:auto;left:6px;right:6px;bottom:6px;gap:4px}.product-thumb-rail button{width:31px;height:38px}.dialog-image{height:auto;min-height:0}.dialog-image>img{height:34vh;min-height:210px;flex:initial}.detail-gallery button{flex-basis:43px;height:52px}}
+
+/* Category image cards: explicit stacking so uploaded media stays visible */
+.cat.has-image{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  min-height:190px;
+  background:#252827!important;
+  color:#fff;
+}
+.cat.has-image .cat-image{
+  display:block;
+  position:absolute;
+  inset:0;
+  z-index:0;
+  overflow:hidden;
+  pointer-events:none;
+}
+.cat.has-image .cat-image img{
+  display:block;
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  opacity:1;
+  filter:saturate(.82);
+  transform:scale(1);
+  transition:transform .55s;
+}
+.cat.has-image:before{
+  content:"";
+  display:block;
+  position:absolute;
+  inset:0;
+  z-index:1;
+  background:linear-gradient(180deg,#11182722 0%,#101413c9 100%);
+  pointer-events:none;
+}
+.cat.has-image:after{display:none!important}
+.cat.has-image:hover .cat-image img{transform:scale(1.05)}
+.cat.has-image .cat-num,
+.cat.has-image .cat-line,
+.cat.has-image b,
+.cat.has-image .cat-meta{
+  position:relative;
+  z-index:2;
+}
+.cat.has-image .cat-num{color:#f5ead6}
+.cat.has-image .cat-line{background:#d3bd91}
+.cat.has-image b{
+  position:relative;
+  left:auto;
+  right:auto;
+  bottom:auto;
+  display:block;
+  max-width:95%;
+  margin-top:22px;
+  color:#fff;
+}
+.cat.has-image .cat-meta{color:#eee6d9}
+.cat.has-image .cat-arrow{color:#fff}
+
 </style>
 </head>
 <body>
