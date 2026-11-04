@@ -133,6 +133,24 @@ create policy "REGNAR admins can update product images" on storage.objects for u
 drop policy if exists "REGNAR admins can delete product images" on storage.objects;
 create policy "REGNAR admins can delete product images" on storage.objects for delete to authenticated using (bucket_id = 'regnar-products' and public.is_regnar_admin());
 
+-- ───────── Anonymous interaction counts (storefront inserts, only admins read) ─────────
+create table if not exists public.analytics_events (
+  id bigint generated always as identity primary key,
+  event text not null check (char_length(event) <= 40),
+  product_id text check (char_length(product_id) <= 60),
+  label text check (char_length(label) <= 120),
+  sid text check (char_length(sid) <= 40),
+  created_at timestamptz not null default now()
+);
+create index if not exists analytics_events_created_idx on public.analytics_events (created_at desc);
+alter table public.analytics_events enable row level security;
+drop policy if exists "anyone can log an event" on public.analytics_events;
+create policy "anyone can log an event" on public.analytics_events for insert to anon, authenticated with check (true);
+drop policy if exists "admins read events" on public.analytics_events;
+create policy "admins read events" on public.analytics_events for select to authenticated using (public.is_regnar_admin());
+grant insert on public.analytics_events to anon, authenticated;
+grant select on public.analytics_events to authenticated;
+
 -- ───────── Starter data (only inserted when missing; no fake products) ─────────
 insert into public.categories(name_en, name_ar, slug, sort_order)
 select * from (values

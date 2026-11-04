@@ -89,3 +89,6 @@ load().then(()=>{const h=location.hash;if(h&&h.length>1&&document.querySelector(
 document.addEventListener('load',e=>{const i=e.target;if(i.tagName==='IMG')i.classList.add('ready')},true);
 document.addEventListener('error',e=>{const i=e.target;if(i.tagName==='IMG'&&i.dataset.full&&!i.dataset.fell){i.dataset.fell='1';i.src=i.dataset.full}},true);
 new MutationObserver(ms=>{for(const m of ms)for(const n of m.addedNodes){if(n.nodeType!==1)continue;(n.tagName==='IMG'?[n]:n.querySelectorAll('img')).forEach(i=>{if(i.complete&&i.naturalWidth)i.classList.add('ready')})}}).observe(document.body,{childList:true,subtree:true});
+
+/* bridge for assets/js/features.js */
+window.REGNAR={get products(){return products},get categories(){return categories},get active(){return active},get lang(){return lang},get content(){return storeContent},img,thumb,title,currency,money,sizes,galleryPaths,db,openProduct,wa,toast,t,esc};

@@ -1,0 +1,126 @@
+/* ===== REGNAR v4 · mobile-first polish ===== */
+:root{--ease:cubic-bezier(.22,.8,.24,1);--safe-b:env(safe-area-inset-bottom,0px)}
+html{-webkit-text-size-adjust:100%;overflow-x:hidden}
+body{overflow-x:hidden;-webkit-tap-highlight-color:transparent;text-rendering:optimizeLegibility}
+img{max-width:100%}
+a,button,.product,.cat{touch-action:manipulation}
+
+/* smoother header */
+.head{transition:box-shadow .3s,background .3s;will-change:transform}
+.head.scrolled{box-shadow:0 8px 30px -18px #0005;background:#f5f1e9f5}
+.nav a{position:relative;padding:6px 0}
+.nav a:after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .3s var(--ease)}
+.nav a:hover:after{transform:scaleX(1)}
+
+/* scroll reveal */
+.rv{opacity:0;transform:translateY(22px);transition:opacity .7s var(--ease),transform .7s var(--ease);transition-delay:calc(var(--d,0)*60ms)}
+.rv.in{opacity:1;transform:none}
+.no-js .rv{opacity:1;transform:none}
+
+/* skip offscreen work -> smoother scrolling */
+.brand-story,.custom,#about,#contact,.footer{content-visibility:auto;contain-intrinsic-size:auto 520px}
+
+/* cards */
+.product-image,.cat{transition:transform .45s var(--ease),box-shadow .45s var(--ease)}
+.product-image img{transition:opacity .45s ease,transform .8s var(--ease)}
+@media(hover:hover){
+ .product:hover .product-image{box-shadow:0 22px 40px -22px #0007}
+ .cat:hover{transform:translateY(-4px)}
+}
+.product:active .product-image{transform:scale(.985)}
+.product-info{align-items:flex-start}
+.product .price,.product-info strong{white-space:nowrap}
+.tabs button{border-radius:999px;transition:background .25s,color .25s,transform .2s}
+.tabs button:active{transform:scale(.95)}
+.cta{border-radius:2px;position:relative;overflow:hidden}
+.cta:active{transform:scale(.97)}
+
+/* modal: smooth open */
+.modal{display:grid;visibility:hidden;opacity:0;transition:opacity .28s ease,visibility 0s .28s;backdrop-filter:blur(4px)}
+.modal.open{visibility:visible;opacity:1;transition:opacity .28s ease}
+.dialog{transform:translateY(18px) scale(.985);transition:transform .38s var(--ease);overscroll-behavior:contain}
+.modal.open .dialog{transform:none}
+.close{position:sticky;top:10px;z-index:6;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;float:right;margin:10px 10px -54px auto;background:#f5f1e9ee;border:0;font-size:26px;box-shadow:0 4px 14px #0003}
+.rtl .close{float:left;margin:10px auto -54px 10px}
+
+/* floating WhatsApp + back to top */
+.fab{position:fixed;right:16px;bottom:calc(16px + var(--safe-b));z-index:40;display:flex;flex-direction:column;gap:10px;align-items:flex-end}
+.rtl .fab{right:auto;left:16px;align-items:flex-start}
+.fab a,.fab button{width:54px;height:54px;border-radius:50%;border:0;display:grid;place-items:center;box-shadow:0 10px 26px -6px #0006;transition:transform .25s var(--ease),opacity .3s}
+.fab a{background:#25d366;color:#fff}
+.fab a:active,.fab button:active{transform:scale(.92)}
+.fab svg{width:28px;height:28px;fill:currentColor}
+.fab .up{width:44px;height:44px;background:var(--ink);color:#fff;opacity:0;pointer-events:none;transform:translateY(10px)}
+.fab .up.show{opacity:1;pointer-events:auto;transform:none}
+.fab .up svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2}
+body.modal-open .fab{display:none}
+
+/* ===== mobile ===== */
+@media(max-width:650px){
+ body{font-size:15px}
+ .announcement{height:auto;min-height:29px;padding:6px 12px;text-align:center;line-height:1.4}
+ .head{backdrop-filter:none;background:#f5f1e9}
+ .brand img{height:38px;width:auto}
+ .menu{width:44px;height:44px;font-size:26px;display:grid;place-items:center}
+ .lang{min-width:44px;min-height:44px}
+ .actions .cta{display:none}
+ /* full-width slide-down menu */
+ .head .nav{display:flex;position:fixed;left:0;right:0;top:70px;bottom:0;flex-direction:column;justify-content:flex-start;gap:0;background:var(--paper);padding:14px 22px calc(30px + var(--safe-b));opacity:0;visibility:hidden;transform:translateY(-10px);transition:opacity .25s,transform .3s var(--ease),visibility 0s .3s;overflow:auto;z-index:19}
+ .head.menu-open .nav{opacity:1;visibility:visible;transform:none;transition:opacity .25s,transform .3s var(--ease);position:fixed;top:70px;padding:14px 22px 30px}
+ .head .nav a{font:400 32px var(--serif);padding:18px 0;border-bottom:1px solid var(--line);letter-spacing:0;color:var(--ink)}
+ .head .nav a:after{display:none}
+ /* hero */
+ .hero2 h1{font-size:clamp(46px,14.5vw,70px);line-height:.98}
+ .hero-side p{font-size:16px}
+ .hero2 .hero-buttons{display:flex;flex-wrap:wrap;align-items:center}
+ .hero2 .cta.gold{flex:1 1 100%;min-height:52px;font-size:15px}
+ .wall{gap:10px}
+ /* section rhythm */
+ .section{padding:56px 0}
+ .section-title h2,.custom h2,.contact h2,.brand-story-copy h2{font-size:clamp(36px,11vw,48px);line-height:1.05}
+ .section-title{margin-bottom:24px}
+ /* categories: 2 cols, bigger tap */
+ .cat{min-height:150px;border-radius:2px}
+ /* tabs: swipe row */
+ .tools{flex-direction:column;align-items:stretch;gap:12px;padding:14px 0;position:static}
+ .tabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;margin:0 -16px;padding:2px 16px;scroll-snap-type:x proximity}
+ .tabs::-webkit-scrollbar{display:none}
+ .tabs button{flex:0 0 auto;min-height:40px;padding:0 16px;scroll-snap-align:start;white-space:nowrap}
+ .filters{display:grid;grid-template-columns:1.4fr 1fr;gap:8px;width:100%}
+ .filters input,.filters select{min-height:46px;width:100%;font-size:16px;border-radius:2px}
+ /* products: 2 cols, tidy text */
+ .grid{gap:22px 10px}
+ .product h3{font-size:17px;line-height:1.2}
+ .product-info{flex-direction:column;gap:4px;padding-top:10px}
+ .product-info .price-stack{align-items:flex-start}
+ .product-thumb-rail{display:none}
+ .product-tags .tag{font-size:10px;padding:4px 7px}
+ /* forms: 16px stops iOS zoom */
+ input,select,textarea{font-size:16px!important;min-height:48px;border-radius:2px}
+ textarea{min-height:96px}
+ .form .cta,.contact-actions .cta{min-height:52px;font-size:15px;width:100%}
+ .contact{display:grid;gap:22px}
+ .contact-actions{display:grid;gap:12px}
+ /* bottom sheet product view */
+ .modal{padding:0;place-items:end stretch;align-items:end}
+ .dialog{width:100%;max-height:94dvh;max-height:94vh;border-radius:18px 18px 0 0;transform:translateY(100%);transition:transform .42s var(--ease)}
+ .modal.open .dialog{transform:none}
+ .dialog:before{content:"";position:sticky;top:0;display:block;width:42px;height:4px;border-radius:4px;background:#0003;margin:8px auto -12px;z-index:7}
+ .dialog-image>img{height:46vh;min-height:240px}
+ .dialog-info{padding:22px 20px calc(96px + var(--safe-b))}
+ /* sticky enquire button inside the sheet */
+ #detailEnquire{position:sticky;bottom:calc(12px + var(--safe-b));width:100%;min-height:54px;font-size:16px;box-shadow:0 14px 30px -10px #000a;z-index:5}
+ .footer-main{display:grid;gap:30px}
+ .footer-links{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+ .footer .bottom{display:grid;gap:6px;font-size:11px;padding-bottom:70px}
+ .fab{right:12px}.rtl .fab{left:12px}
+ .fab a{width:52px;height:52px}
+}
+@media(max-width:360px){.grid{gap:18px 8px}.product h3{font-size:15px}}
+@media(max-width:420px){.categories{gap:8px}}
+
+/* loading skeleton for cards before data arrives */
+.skel{aspect-ratio:3/4;background:linear-gradient(110deg,#e4dccd 30%,#eee7da 50%,#e4dccd 70%) 0 0/200% 100%;animation:shimmer 1.4s linear infinite}
+@media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}.modal,.dialog{transition:none}.skel{animation:none}}
+/* desktop: close button must not become a grid cell */
+@media(min-width:651px){.close{position:absolute;float:none;margin:0;top:12px;right:12px}.rtl .close{right:auto;left:12px;margin:0}}
